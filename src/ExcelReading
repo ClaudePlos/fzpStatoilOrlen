@@ -1,0 +1,124 @@
+private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // Add K.Skowronski
+        
+        
+        
+        JFileChooser fc=new JFileChooser(".xls");
+        
+        // 01 - wskazuję plik zapisu
+        if(fc.showOpenDialog(this)!=JFileChooser.APPROVE_OPTION)
+        {
+           return;
+        }
+        File file = fc.getSelectedFile();
+        
+        // 02 Przetwarzam plik
+        try {
+            
+            String pathFile = file.getPath();
+            
+            Workbook workbook = Workbook.getWorkbook(new File(pathFile));
+            
+            Sheet sheet = workbook.getSheet(0);
+            
+            int numberOfRows = sheet.getRows(); // ilosc wierszy 
+            
+            dokLst = new Object[numberOfRows-1][33]; //(-1 bo pierwszy wiersz to naglowki)
+            
+            for (int i = 1; i < numberOfRows; i++) { // 0 pomijamy bo to nagłówki 
+                
+                /*Cell colomn01 = sheet.getCell(0,i);
+                Cell colomn02 = sheet.getCell(1,i);
+                Cell colomn03 = sheet.getCell(2,i);
+                Cell colomn04 = sheet.getCell(3,i);
+                Cell colomn05 = sheet.getCell(4,i);*/
+                // System.err.println(colomn01.getContents());
+                  
+                   Object NumerFaktury               =   sheet.getCell(0,i).getContents();
+                   Object NumerKarty                 =   sheet.getCell(1,i).getContents();
+                   Object NumerRejestracyjny         =   sheet.getCell(2,i).getContents();
+                   Object DataRealizacji             =   sheet.getCell(3,i).getContents();
+                   Object NrStacji                   =   sheet.getCell(4,i).getContents();
+                   Object Miejscowosc                =   sheet.getCell(5,i).getContents();
+                   Object Licznik                    =   sheet.getCell(6,i).getContents();
+                   Object MPK                        =   sheet.getCell(7,i).getContents();
+                   Object NazwaProduktu              =   sheet.getCell(8,i).getContents();
+                   Object IlLitrow                   =   sheet.getCell(9,i).getContents();
+                   Object CenaZaLitr                 =   sheet.getCell(10,i).getContents();
+                   Object WartoscNetto               =   sheet.getCell(11,i).getContents();
+                   Object WartoscVat                 =   sheet.getCell(12,i).getContents();
+                   Object WartoscBrutto              =   sheet.getCell(13,i).getContents();
+                   Object Imie                       =   sheet.getCell(14,i).getContents();
+                   Object RodzajPojazdu              =   sheet.getCell(15,i).getContents();
+                   Object DaneKosztoweSK             =   sheet.getCell(16,i).getContents();
+                   Object DaneDodatkowe              =   sheet.getCell(17,i).getContents();
+                   Object Nazwisko                   =   sheet.getCell(18,i).getContents();
+                   Object EAN                        =   sheet.getCell(19,i).getContents();
+                   Object DataKsiegowania            =   sheet.getCell(20,i).getContents();
+                   Object PozycjaFaktury             =   sheet.getCell(21,i).getContents();
+                   Object WartoscFaktury             =   sheet.getCell(22,i).getContents();
+                   Object GrupaProd                  =   sheet.getCell(23,i).getContents();
+                   Object StawkaVat                  =   sheet.getCell(24,i).getContents();
+                   Object WartoscVatFak              =   sheet.getCell(25,i).getContents();
+                   Object WartoscNettoFak            =   sheet.getCell(26,i).getContents();
+                   Object CenaSprzedazySrednia       =   sheet.getCell(27,i).getContents();
+                   Object IdFloty                    =   sheet.getCell(28,i).getContents();
+                   Object TypStacji                  =   sheet.getCell(29,i).getContents();
+                   Object CenaZalacznik              =   sheet.getCell(30,i).getContents();
+                   Object Status                     =    "OK";
+                
+                Object[] dok = {NumerFaktury, NumerKarty, NumerRejestracyjny, DataRealizacji, NrStacji, Miejscowosc, Licznik, MPK, NazwaProduktu, IlLitrow, CenaZaLitr
+, WartoscNetto, WartoscVat, WartoscBrutto, Imie, RodzajPojazdu, DaneKosztoweSK, DaneDodatkowe, Nazwisko, EAN, DataKsiegowania
+, PozycjaFaktury, WartoscFaktury, GrupaProd, StawkaVat, WartoscVatFak, WartoscNettoFak, CenaSprzedazySrednia, IdFloty, TypStacji, CenaZalacznik, null, Status};
+                dokLst[i-1] = dok; //(-1 bo pierwszy wiersz to naglowki), a w tabeli w miejsce wiersza 0 wstawiamy 1 wiersz z exela
+
+
+                // wyswietlam
+                Vector<String> tableHeaders = new Vector<String>();
+
+                tableHeaders.add("NumerFaktury");
+                tableHeaders.add("NumerKarty");
+                tableHeaders.add("NumerRejestracyjny");
+                tableHeaders.add("DataRealizacji");
+                tableHeaders.add("NrStacji");
+                tableHeaders.add("Miejscowosc");
+                tableHeaders.add("Licznik");
+                tableHeaders.add("MPK");
+                tableHeaders.add("NazwaProduktu");
+                tableHeaders.add("IlLitrow");
+                tableHeaders.add("CenaZaLitr");
+                tableHeaders.add("WartoscNetto");
+                tableHeaders.add("WartoscVat");
+                tableHeaders.add("WartoscBrutto");
+                tableHeaders.add("Imie");
+                tableHeaders.add("RodzajPojazdu");
+                tableHeaders.add("DaneKosztoweSK");
+                tableHeaders.add("DaneDodatkowe");
+                tableHeaders.add("Nazwisko");
+                tableHeaders.add("EAN");
+                tableHeaders.add("DataKsiegowania");
+                tableHeaders.add("PozycjaFaktury");
+                tableHeaders.add("WartoscFaktury");
+                tableHeaders.add("GrupaProd");
+                tableHeaders.add("StawkaVat");
+                tableHeaders.add("WartoscVatFak");
+                tableHeaders.add("WartoscNettoFak");
+                tableHeaders.add("CenaSprzedazySrednia");
+                tableHeaders.add("IdFloty");
+                tableHeaders.add("TypStacji");
+                tableHeaders.add("CenaZalacznik");
+                tableHeaders.add("STATUS");
+
+                tabelaCSV.setModel(new DefaultTableModel( ( Object[][]) dokLst, tableHeaders.toArray() ));
+                tabelaCSV.setAutoCreateRowSorter(true);
+               
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(OknoRozchody.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (BiffException ex) {
+            Logger.getLogger(OknoFakturyPaliwo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
